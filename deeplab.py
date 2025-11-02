@@ -204,12 +204,18 @@ class DeeplabV3(object):
 
         elif self.mix_type == 2:
             seg_img = (np.expand_dims(pr != 0, -1) * np.array(old_img, np.float32)).astype('uint8')
-            #------------------------------------------------#
-            #   将新图片转换成Image的形式
-            #------------------------------------------------#
             image = Image.fromarray(np.uint8(seg_img))
-        
+
+        #------------------------------------------------#
+        #   ✅ 新增：灰度输出模式（背景=0，目标=255）
+        #   只要在外部设置 self.gray_output=True 即可启用
+        #------------------------------------------------#
+        if hasattr(self, 'gray_output') and self.gray_output:
+            mask = (pr > 0).astype(np.uint8) * 255
+            image = Image.fromarray(mask)
+
         return image
+
 
     def get_FPS(self, image, test_interval):
         #---------------------------------------------------------#
