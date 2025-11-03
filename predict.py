@@ -73,9 +73,9 @@ if __name__ == "__main__":
                 continue
             gt_nonempty = np.max(gt_vol[slice_id]) > 0
 
-        # 跳过空GT切片
-        if not gt_nonempty:
-            continue
+        # # 跳过空GT切片
+        # if not gt_nonempty:
+        #     continue
 
         #-----------------------------------------#
         # detect_image 输出二值mask (灰度)
